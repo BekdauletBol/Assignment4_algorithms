@@ -1,172 +1,198 @@
-Smart City Scheduling - Graph Algorithms Implementation
-A comprehensive Java implementation of graph algorithms for task dependency management and scheduling optimization in smart city applications.
-Overview
-This project implements three core algorithms for directed graph analysis:
+# Smart City Scheduling
 
-Algorithm,Purpose,Complexity
-Tarjan's SCC Detection,Identifies strongly connected components,O(V+E)
-Topological Sorting,Orders tasks respecting dependencies (Kahn’s + DFS),O(V+E)
-DAG Shortest/Longest Paths,Computes optimal/critical paths,O(V+E)
+### Graph Algorithms Implementation
 
+**Author:** Bekdaulet Bolatov
+**Course:** Design and Analysis of Algorithms — Assignment 4
 
+---
 
-AlgorithmPurposeComplexityTarjan's SCC DetectionIdentifies strongly connected componentsO(V+E)Topological SortingOrders tasks respecting dependencies (Kahn’s + DFS)O(V+E)DAG Shortest/Longest PathsComputes optimal/critical pathsO(V+E)
-To Start
-text# Build project
+## Overview
+
+This project presents a **comprehensive Java implementation of graph algorithms** designed for **task dependency management** and **scheduling optimization** in **Smart City** applications.
+Three main algorithms for directed graph analysis are implemented and benchmarked.
+
+| Algorithm                              | Purpose                                  | Complexity |
+| -------------------------------------- | ---------------------------------------- | ---------- |
+| **Tarjan’s SCC Detection**             | Identifies strongly connected components | O(V + E)   |
+| **Topological Sorting (Kahn’s + DFS)** | Orders tasks respecting dependencies     | O(V + E)   |
+| **DAG Shortest/Longest Paths**         | Computes optimal and critical paths      | O(V + E)   |
+
+---
+
+## Build & Run Instructions
+
+**Build the project:**
+
+```bash
 mvn clean compile
+```
 
-# Run tests (6 test classes, 45 tests, 100% pass rate)
+**Run tests (6 classes, 45 tests, 100% pass rate):**
+
+```bash
 mvn test
+```
 
-# Execute main application
+**Execute the main application:**
+
+```bash
 mvn exec:java -Dexec.mainClass="com.SmartCity.Main"
-Results of Tests
-Tests run: 45, Failures: 0, Errors: 0, Skipped: 0
+```
 
-DFSTopologicalSortTest: Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
-ComponentTSTest: Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
-SCCTest: Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
-KahnTopologicalSortTest: Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
-DAGTest: Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
-CondensationGraphTest: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+---
 
-Project Structure
-textsrc/main/java/com/SmartCity/
+## Test Results
+
+| Test Class              | Tests Run | Failures | Errors | Skipped |
+| ----------------------- | --------- | -------- | ------ | ------- |
+| DFSTopologicalSortTest  | 8         | 0        | 0      | 0       |
+| ComponentTSTest         | 7         | 0        | 0      | 0       |
+| SCCTest                 | 8         | 0        | 0      | 0       |
+| KahnTopologicalSortTest | 7         | 0        | 0      | 0       |
+| DAGTest                 | 6         | 0        | 0      | 0       |
+| CondensationGraphTest   | 9         | 0        | 0      | 0       |
+
+**Total:** 45 tests — *All Passed.*
+
+---
+
+## Project Structure
+
+```
+src/main/java/com/SmartCity/
 ├── algorithms/
-│ ├── SCC.java # Tarjan's algorithm
-│ ├── CondensationGraph.java # DAG from SCCs
-│ ├── KahnTopologicalSort.java # BFS-based topo sort
-│ ├── DFSTopologicalSort.java # DFS-based topo sort
-│ ├── ComponentTS.java # Component-level sorting
-│ └── DAG.java # Shortest/longest paths
-├── model/Graph.java # Weighted graph representation
+│   ├── SCC.java                # Tarjan’s algorithm
+│   ├── CondensationGraph.java  # DAG construction from SCCs
+│   ├── KahnTopologicalSort.java# BFS-based topological sort
+│   ├── DFSTopologicalSort.java # DFS-based topological sort
+│   ├── ComponentTS.java        # Component-level sorting
+│   └── DAG.java                # Shortest/longest path algorithms
+├── model/
+│   └── Graph.java              # Weighted graph representation
 └── utils/
-├── GraphLoader.java # JSON graph loading
-└── Metrics.java # Performance tracking
+    ├── GraphLoader.java        # JSON graph loader
+    └── Metrics.java            # Performance tracking
+```
 
-src/test/java/ # Comprehensive JUnit tests
-input/ # 9 test datasets (JSON format)
-Datasets
+**Additional:**
 
-Small (6–8 vertices): Basic cycle detection and DAG validation
-Medium (10–18 vertices): Dense/sparse structures with multiple SCCs
-Large (25–40 vertices): Complex dependency graphs for performance testing
+* `src/test/java/` — JUnit test suite
+* `input/` — 9 datasets in JSON format
 
-All datasets use edge weights representing task duration (1–7 hours).
-Algorithm Details
+---
 
-Strongly Connected Components (Tarjan)
+## Datasets
 
-Complexity: O(V + E) time, O(V) space
-Features: Single-pass DFS, detects cycles, builds condensation graph
-Use Case: Identify circular dependencies in task scheduling
+* **Small (6–8 vertices):** Basic cycle and DAG validation
+* **Medium (10–18 vertices):** Multiple SCCs and mixed structures
+* **Large (25–40 vertices):** Complex dependency graphs for performance testing
 
+All edges include weights representing **task duration (1–7 hours)**.
 
-Topological Sorting
+---
 
-Kahn’s Algorithm: BFS with in-degree tracking, explicit cycle detection
-DFS-based: Post-order traversal, memory efficient
-Complexity: Both O(V + E)
-Use Case: Determine valid task execution order
+## Algorithm Details
 
+### 1. Strongly Connected Components (Tarjan’s)
 
-DAG Paths
+* **Complexity:** O(V + E) time, O(V) space
+* **Features:** Single-pass DFS, cycle detection, condensation graph building
+* **Use Case:** Detect circular dependencies in scheduling
 
-Shortest Path: Minimum task completion time
-Longest Path: Critical path analysis (project duration)
-Complexity: O(V + E) using topological order
-Advantage over Dijkstra: Handles negative weights, no priority queue overhead
+### 2. Topological Sorting
 
+* **Kahn’s Algorithm:** BFS with in-degree tracking and explicit cycle detection
+* **DFS-based Algorithm:** Post-order traversal, memory-efficient
+* **Use Case:** Determine valid task execution order
 
+### 3. DAG Shortest & Longest Paths
 
-Performance Results
+* **Shortest Path:** Minimum completion time
+* **Longest Path:** Critical path for project duration
+* **Advantage:** Handles negative weights, no priority queue needed
 
+---
 
+## Performance Results
 
+| Dataset | Vertices | SCC Ops | Topo Ops | Total Time (ms) |
+| ------- | -------- | ------- | -------- | --------------- |
+| Small   | 7–10     | 21–31   | 14–30    | 0.082–0.285     |
+| Medium  | 14–19    | 44–59   | 23–59    | 0.106–0.161     |
+| Large   | 28–45    | 86–141  | 53–140   | 0.134–0.296     |
 
+**Key Findings:**
 
+* Linear scaling confirmed (~3 ops per vertex)
+* Condensation greatly reduces graph complexity
+* Dense graphs increase operations but retain O(V + E) scaling
+* Critical path length correlates with graph depth
 
+---
 
+## Smart City Applications
 
+### Street Maintenance Scheduling
 
+* Detect route dependencies (SCC)
+* Order maintenance tasks (Topological sort)
+* Identify critical maintenance paths (Longest path)
 
+### Sensor Network Deployment
 
+* Optimize activation sequence
+* Minimize deployment time
+* Handle circular sensor dependencies
 
+### Infrastructure Project Planning
 
+* Calculate minimum completion time
+* Identify bottleneck tasks
+* Optimize resource allocation
 
+---
 
+## Testing Overview
 
+Comprehensive coverage across algorithms and scenarios:
 
+* **SCCTest:** Cycle detection, multi-component graphs
+* **CondensationGraphTest:** DAG validation, edge deduplication
+* **TopologicalSortTests:** Kahn + DFS, disconnected graphs
+* **DAGTest:** Shortest/longest path reconstruction, critical path analysis
 
+---
 
+## Key Features
 
+✓ Edge-weighted graphs for realistic durations
+✓ Automatic cycle detection
+✓ Task-level and component-level topological ordering
+✓ Critical path identification
+✓ Performance tracking (operations, execution time)
+✓ JSON-based dataset customization
 
+---
 
+## Implementation Highlights
 
+* No external dependencies except **Gson (JSON)** and **JUnit (testing)**
+* Clear modular design: algorithms, models, and utilities separated
+* Robust error handling for edge cases
+* Optimized adjacency-list structures
+* Detailed documentation and complexity notes
 
+---
 
+## Conclusion
 
+This project demonstrates efficient and scalable implementations of graph algorithms for **smart city scheduling**.
 
+* **Tarjan’s SCC** excels at dependency and cycle analysis.
+* **Topological sorting** ensures correct execution order.
+* **DAG shortest/longest path** provides optimal scheduling insights for time-critical applications.
 
+Together, these components form a foundation for **intelligent urban scheduling systems** that are both efficient and adaptable.
 
-
-
-
-
-Dataset SizeVerticesSCC OpsTopo OpsTotal time (ms)Small7 – 1021 – 3114 – 300.082 – 0.285Medium14 – 1944 – 5923 – 590.106 – 0.161Large28 – 4586 –14153 –1400.134 – 0.296
-Key Findings
-
-Linear scaling confirmed: ~3 operations per vertex
-Condensation reduces graph complexity significantly
-Dense graphs require more operations but maintain O(V + E) complexity
-Critical path length correlates with graph depth
-
-Smart City Applications
-Street Maintenance Scheduling
-
-Detect route dependencies using SCC
-Order tasks topologically
-Identify critical maintenance paths
-
-Sensor Network Deployment
-
-Determine activation sequence
-Minimize deployment time
-Handle circular sensor dependencies
-
-Infrastructure Project Planning
-
-Calculate minimum completion time (longest path)
-Identify bottleneck tasks
-Optimize resource allocation
-
-Testing
-Comprehensive test coverage includes:
-
-SCCTest: Cycle detection, multiple SCCs, single vertex, complex graphs
-CondensationGraphTest: Component mapping, DAG validation, edge deduplication
-TopologicalSortTest: Both Kahn’s and DFS variants, cycle detection, disconnected graphs
-DAGTest: Shortest/longest paths, path reconstruction, critical path, unreachable vertices
-
-Key Features
-
-✓ Edge-weighted graphs for realistic task durations
-✓ Automatic cycle detection and reporting
-✓ Component-level and task-level topological ordering
-✓ Critical path identification for project planning
-✓ Performance metrics tracking (operations, execution time)
-✓ JSON-based dataset format for easy customization
-
-Implementation Highlights
-
-No external dependencies (except Gson for JSON, JUnit for tests)
-Clean separation of algorithms, models, and utilities
-Comprehensive error handling for edge cases
-Optimized data structures (adjacency lists, single-pass algorithms)
-Detailed documentation with complexity analysis
-
-Conclusion
-The study demonstrates that all three graph algorithms operate efficiently with linear scalability. Tarjan’s SCC detection is ideal for dependency analysis, while topological sorting ensures safe task execution order. The DAG shortest/longest path method is recommended for time optimization and critical path planning in smart city scheduling.
-Thank You for attention!
-Author: Bekdaulet Bolatov
-For the course: Design and Analysis of Algorithms — Assignment 4
+**Thank you for your attention!**
